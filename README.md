@@ -17,7 +17,7 @@ A mod for *Get To Work* that allows players to easily swap FPS during gameplay, 
 
 # Exspress Installation/Uninstallation`(NEW)`
 1. **Download the installer.exe**:
-   - Download [installer.exe](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/GTWinstaller.exe).
+   - Download [installer.exe](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/GTWInstaller.exe).
    - Select the `Get To Work` folder accoring to the image and press `install`.
    - Unistall by pressing the unistall button and unistalling GTWInstaller.exe
 
