@@ -15,7 +15,7 @@ A mod for *Get To Work* that allows players to easily swap FPS during gameplay, 
 - **Customizable hotkeys**: You can change the hotkeys if the defaults don't work or if you prefer other keys.
 - **Debug stats**: A debug menu is included in the current version top right. If you experience any bugs, please provide a video with the debug stats open if possible.
 
-## Exspress Installation/Uninstallation`(NEW)`
+# Exspress Installation/Uninstallation`(NEW)`
 1. **Download the installer.exe**:
    - Download [installer.exe](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/GTWinstaller.exe).
    - Select the `Get To Work` folder accoring to the image and press `install`.
@@ -26,7 +26,7 @@ A mod for *Get To Work* that allows players to easily swap FPS during gameplay, 
 - Controller support is still untested (I don't own a controller).
 - Some bugs may still be present as the mod is in alpha. Please report any issues with a video showing the debug stats:D
 
-## Old Installation(OLD)
+### Old Installation(OLD)
 
 1. **Download and Install BepInEx**:
    - Download BepInEx_x64_5.4.22.0.zip.
@@ -37,7 +37,7 @@ A mod for *Get To Work* that allows players to easily swap FPS during gameplay, 
    - Download [FpsToggleModDebug.dll](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/FpsToggleModDebug.dll).
    - Move [FpsToggleModDebug.dll](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/FpsToggleModDebug.dll) into `Steam\steamapps\common\Get To Work\BepInEx\plugins`.
 
-## Uninstallation(OLD)
+### Uninstallation(OLD)
 
 1. **Temporary Removal**:
    - Remove `FpsToggleMod.dll` from the `plugins` folder.
