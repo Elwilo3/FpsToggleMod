@@ -1,65 +1,59 @@
-# FpsToggleMod (Alpha)
+# FpsToggleMod
 
-A mod for *Get To Work* that allows players to easily swap FPS during gameplay, eliminating the need to tab out with RivaTunner. This is especially useful for things like topgrabs while in speedrunning. This mod only changes fps nothing else about the game.
-
-**Note**: This mod is in the alpha phase and still requires testing. It is not yet approved for speedrun.com submissions(but soon maybe I havent asked yet).
+A mod for *Get To Work* that allows players to easily swap FPS during gameplay, eliminating the need to tab out with RivaTunner. This is especially useful for speedrunning techniques like topgrabs. The mod only changes FPS and has no other impact on gameplay.
 
 ## Features
 
-- **Easily switch FPS** without tabbing out of the game.
-- **Custom FPS limits**: Set your preferred FPS values for smoother gameplay.
+- **Seamless FPS Switching**: Change FPS instantly without leaving the game
+- **Customizable FPS Limits**: Set your preferred FPS values for optimal gameplay
+- **Keyboard & Controller Support**: Full support for both input methods
 - **Default Hotkeys**:
-  - **H**: Open/close the menu.
-  - **K**, **L**, **O**: Keys for switching FPS (keyboard).
-  - **Dpad buttons**: Default for controllers (controller support still needs testing but should work I hope).
-- **Customizable hotkeys**: You can change the hotkeys if the defaults don't work or if you prefer other keys.
-- **Debug stats**: A debug menu is included in the current version top right. If you experience any bugs, please provide a video with the debug stats open if possible.
+  - **H**: Open/close the settings menu
+  - **K**: Set to 45 FPS (customizable value)
+  - **L**: Set to 60 FPS (customizable value)
+  - **O**: Uncap FPS
+  - Controller equivalents available in the settings menu
 
-# Exspress Installation/Uninstallation`(NEW)`
-1. **Download the installer.exe**:
-   - Download [installer.exe](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/GTWInstaller.exe).
-   - Select the `Get To Work` folder accoring to the image and press `install`.
-   - Unistall by pressing the unistall button and unistalling GTWInstaller.exe
+## Installation
 
-## Known Issues
+### Installation
+1. **Install BepInEx**:
+   - Download BepInEx_x64_5.4.22.0.zip
+   - Extract ALL contents to your *Get To Work* game folder
+   - Run the game once and close it
+2. **Install FpsToggleMod**:
+   - Download [FpsToggleMod.dll](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/FpsToggleMod.dll)
+   - Move the .dll file to `Steam\steamapps\common\Get To Work\BepInEx\plugins`
 
-- Controller support is still untested (I don't own a controller).
-- Some bugs may still be present as the mod is in alpha. Please report any issues with a video showing the debug stats:D
-
-### Old Installation(OLD)
-
-1. **Download and Install BepInEx**:
-   - Download BepInEx_x64_5.4.22.0.zip.
-   - Extract **ALL** contents into your *Get To Work* game folder (right-click on the game in Steam and click "Browse local files").
-   - Run the game once and close it.
-
-2. **Download and Install FpsToggleMod**:
-   - Download [FpsToggleModDebug.dll](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/FpsToggleModDebug.dll).
-   - Move [FpsToggleModDebug.dll](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/FpsToggleModDebug.dll) into `Steam\steamapps\common\Get To Work\BepInEx\plugins`.
-
-### Uninstallation(OLD)
-
-1. **Temporary Removal**:
-   - Remove `FpsToggleMod.dll` from the `plugins` folder.
-   - The game will run normally without mod features.
-
-2. **Complete Removal**:
-   - Delete `FpsToggleMod.dll`.
-   - Remove BepInEx folder and associated files:
+### Uninstallation
+1. Delete `FpsToggleMod.dll` from the plugins folder
+2. Optional full removal:
+   - Delete the BepInEx folder
+   - Remove:
      - `winhttp.dll`
      - `doorstop_config.ini`
      - `.doorstop_version`
      - `changelog.txt`
-   - Verify game files through Steam.
+   - Verify game files through Steam
 
-## Note
+## Speedrunning Usage
 
-This mod is for testing purposes only and should **not** be used in speedrun submissions!
-
-⚠️ **Important**: Remove all mod files before submitting speedruns!
+This mod is approved for use in Get To Work speedruns! When submitting runs:
+1. Include your FPS with steam overlay according to [this guide](https://youtu.be/HNTQLllhTpw?t=320) as it is required by the speedrun.com rules
+2. Have a good time:)))))))
 
 ## Credits
 
 Created by [@finn_the_leech](https://www.twitch.tv/finn_the_leech) on Twitch and @potatokiller80yucki21dookieman67 on Discord.
+
+## Support
+
+If you encounter any issues:
+1. Check if you're using the latest version
+2. Join the [Get To Work Discord](https://discord.gg/HKy4tMRPVQ) for support
+3. When reporting issues, please include:
+   - Your mod version
+   - Steps to reproduce the issue
+   - Any relevant error messages
 
 
