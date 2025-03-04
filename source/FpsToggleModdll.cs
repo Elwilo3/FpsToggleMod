@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace FpsLimitMod
 {
-    [BepInPlugin("com.YourName.FpsLimitMod", "FPS Limit Mod", "1.0.7")]
+    [BepInPlugin("com.Palmblom.FpsLimitMod", "FPS Limit Mod", "1.0.0")]
     public class FpsLimitMod : BaseUnityPlugin
     {
         #region Fields and Properties
@@ -149,7 +149,7 @@ namespace FpsLimitMod
             if (Input.GetKeyDown(UncapFpsKey.Value))
                 UncapFps();
 
-            // Controller controls
+            // Controller button controls
             if (Input.GetKeyDown(controllerLimit45KeyBinding.Key.Value))
                 SetFpsLimit(controllerLimit45KeyBinding.FpsValue.Value);
 
@@ -158,6 +158,34 @@ namespace FpsLimitMod
 
             if (Input.GetKeyDown(ControllerUncapFpsKey.Value))
                 UncapFps();
+
+            // Handle custom axis mappings
+            CheckAxisMapping(controllerLimit45KeyBinding.Key.Value, () => SetFpsLimit(controllerLimit45KeyBinding.FpsValue.Value));
+            CheckAxisMapping(controllerLimit60KeyBinding.Key.Value, () => SetFpsLimit(controllerLimit60KeyBinding.FpsValue.Value));
+            CheckAxisMapping(ControllerUncapFpsKey.Value, UncapFps);
+        }
+
+        private void CheckAxisMapping(KeyCode keyCode, System.Action action)
+        {
+            // Check if this is one of our custom axis mappings
+            if ((int)keyCode > (int)KeyCode.JoystickButton19 && (int)keyCode <= (int)KeyCode.JoystickButton19 + 10)
+            {
+                int axisNumber = (int)keyCode - (int)KeyCode.JoystickButton19 - 1;
+                string axisName = axisNumber <= 1 ? (axisNumber == 0 ? "X" : "Y") : axisNumber.ToString();
+
+                try
+                {
+                    float axisValue = Input.GetAxis("Joystick1Axis" + axisName);
+                    if (Mathf.Abs(axisValue) > 0.7f)  // Threshold to detect significant movement
+                    {
+                        action.Invoke();
+                    }
+                }
+                catch (System.Exception)
+                {
+                    // Axis might not exist, just continue
+                }
+            }
         }
 
         private void DetectKeyPress()
@@ -169,6 +197,48 @@ namespace FpsLimitMod
                 waitingForKeyPress = false;
                 currentBindingAction = "";
                 e.Use();
+                return;
+            }
+
+            // Check for controller button presses
+            for (KeyCode key = KeyCode.JoystickButton0; key <= KeyCode.JoystickButton19; key++)
+            {
+                if (Input.GetKeyDown(key))
+                {
+                    AssignNewKeyBinding(key);
+                    waitingForKeyPress = false;
+                    currentBindingAction = "";
+                    return;
+                }
+            }
+
+            // Check for controller axis inputs
+            if (currentBindingAction.StartsWith("Controller"))
+            {
+                // Check joystick axes
+                string[] axisNames = { "X", "Y", "3", "4", "5", "6", "7", "8", "9", "10" };
+                foreach (string axis in axisNames)
+                {
+                    try
+                    {
+                        float axisValue = Input.GetAxis("Joystick1Axis" + axis);
+                        if (Mathf.Abs(axisValue) > 0.7f)  // Threshold to detect significant movement
+                        {
+                            // Map to a KeyCode that represents this axis
+                            // We'll use KeyCode.Joystick1Button0 through Button19 for actual buttons
+                            // And use higher values for axes
+                            KeyCode axisKeyCode = (KeyCode)(KeyCode.JoystickButton19 + int.Parse(axis) + 1);
+                            AssignNewKeyBinding(axisKeyCode);
+                            waitingForKeyPress = false;
+                            currentBindingAction = "";
+                            return;
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        // Axis might not exist, just continue
+                    }
+                }
             }
         }
 
@@ -216,7 +286,19 @@ namespace FpsLimitMod
 
             if (waitingForKeyPress)
             {
-                GUI.Label(new Rect(20, currentYOffset, 460, 20), $"Press any key to set binding for {currentBindingAction}");
+                string message = currentBindingAction.StartsWith("Controller")
+                    ? $"Press any controller button to set binding for {currentBindingAction}"
+                    : $"Press any key to set binding for {currentBindingAction}";
+
+                GUI.Label(new Rect(20, currentYOffset, 460, 20), message);
+                currentYOffset += 30;
+
+                // Add a cancel button
+                if (GUI.Button(new Rect(20, currentYOffset, 100, 20), "Cancel"))
+                {
+                    waitingForKeyPress = false;
+                    currentBindingAction = "";
+                }
             }
         }
 
@@ -253,10 +335,10 @@ namespace FpsLimitMod
             GUI.Label(new Rect(20, y, 250, 20), "Controller shortcuts");
             y += 20;
 
-            DrawKeyBindingOption(controllerLimit45KeyBinding, ref y, buttonOffset);
-            DrawKeyBindingOption(controllerLimit60KeyBinding, ref y, buttonOffset);
+            DrawControllerBindingOption(controllerLimit45KeyBinding, ref y, buttonOffset);
+            DrawControllerBindingOption(controllerLimit60KeyBinding, ref y, buttonOffset);
 
-            GUI.Label(new Rect(20, y, 250, 20), $"{ControllerUncapFpsKey.Value} uncaps FPS");
+            GUI.Label(new Rect(20, y, 250, 20), $"{GetControllerButtonName(ControllerUncapFpsKey.Value)} uncaps FPS");
             if (!waitingForKeyPress && GUI.Button(new Rect(280 + buttonOffset, y, 100, 20), "Change Key"))
             {
                 waitingForKeyPress = true;
@@ -284,6 +366,43 @@ namespace FpsLimitMod
                 }
             }
             y += 30;
+        }
+
+        private void DrawControllerBindingOption(KeyBinding binding, ref int y, int buttonOffset)
+        {
+            GUI.Label(new Rect(20, y, 250, 20), $"{GetControllerButtonName(binding.Key.Value)} sets FPS to:");
+            binding.InputFieldText = GUI.TextField(new Rect(200, y, 40, 20), binding.InputFieldText, 3);
+
+            if (!waitingForKeyPress && GUI.Button(new Rect(250 + buttonOffset, y, 100, 20), "Change Key"))
+            {
+                waitingForKeyPress = true;
+                currentBindingAction = binding.ActionDescription;
+            }
+
+            if (GUI.Button(new Rect(360 + buttonOffset, y, 120, 20), "Set FPS Limit"))
+            {
+                if (int.TryParse(binding.InputFieldText, out int fps))
+                {
+                    binding.FpsValue.Value = fps;
+                }
+            }
+            y += 30;
+        }
+
+        private string GetControllerButtonName(KeyCode keyCode)
+        {
+            if (keyCode >= KeyCode.JoystickButton0 && keyCode <= KeyCode.JoystickButton19)
+            {
+                int buttonNumber = keyCode - KeyCode.JoystickButton0;
+                return $"Controller Button {buttonNumber}";
+            }
+            else if ((int)keyCode > (int)KeyCode.JoystickButton19 && (int)keyCode <= (int)KeyCode.JoystickButton19 + 10)
+            {
+                // This is one of our custom axis mappings
+                int axisNumber = (int)keyCode - (int)KeyCode.JoystickButton19 - 1;
+                return $"Controller Axis {axisNumber}";
+            }
+            return keyCode.ToString();
         }
 
         #endregion
