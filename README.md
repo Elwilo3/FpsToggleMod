@@ -18,7 +18,7 @@ A mod for *Get To Work* that allows players to easily swap FPS during gameplay, 
 
 ### Installation
 1. **Install BepInEx**:
-   - Download BepInEx_x64_5.4.22.0.zip
+   - Download [BepInEx_x64_5.4.22.0.zip](https://github.com/Elwilo3/FpsToggleMod/raw/refs/heads/main/files/BepInEx_win_x64_5.4.23.2.zip)
    - Extract ALL contents to your *Get To Work* game folder
    - Run the game once and close it
 2. **Install FpsToggleMod**:
